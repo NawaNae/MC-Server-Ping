@@ -19,16 +19,17 @@ function pingDomain($domain,$port){
     return $status;
 }
 $serverIP="127.0.0.1";
-if(($pint=pingDomain($serverIP,"25565"))==-1)
+if(($ping=pingDomain($serverIP,"25565"))==-1)
 	echo "Minecraft Server $serverIP\t <span style='color:red'>X</span>";
 else
 {
 	echo "Minecraft Server $serverIP\t <span style='color:green'>";
-	if($ping>400)
+	$pingMaxTime=500;
+	if($ping>$pingMaxTime)
 		echo"</span><span style='color:gray'>▁▂▃▅▇</span>";
 	else
 	{
-		$green=round((400-$ping)/80);
+		$green=round(($pingMaxTime-$ping)/($pingMaxTime/5));
 		$i=0;
 		$signal=array("▁","▂","▃","▅","▇");
 		for(;$i<$green;$i++)
@@ -38,6 +39,7 @@ else
 			echo $signal[$i];
 		echo "</span>";
 	}
+	echo 'reply'. $ping . 'ms';
 
 }
 ?>
